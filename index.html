@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ByteCode</title>
+  <link rel="icon" type="image/png" href="1.png">
+  <link rel="stylesheet" href="style.css">
+  <noscript>
+    <style>
+      .boot-screen { display: none; }
+      .topbar {
+        opacity: 1 !important;
+        transform: translate(-50%, 0) !important;
+        pointer-events: auto !important;
+      }
+      .page-shell {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+</head>
+<body data-theme="light" data-user-state="guest">
+  <div class="boot-screen" id="boot-screen" role="dialog" aria-modal="true" aria-label="ByteCode startup screen">
+    <div class="boot-screen__noise"></div>
+    <div class="boot-screen__center">
+      <div class="boot-logo" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <p class="boot-label">ByteCode Startup</p>
+      <p class="boot-status" id="boot-status">Powering on interface core...</p>
+      <div class="boot-loader" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="boot-progress">
+        <span class="boot-progress__fill" id="boot-progress-fill"></span>
+      </div>
+      <ul class="boot-log" id="boot-log" aria-live="polite"></ul>
+    </div>
+  </div>
+
+  <header class="topbar" id="topbar">
+    <div class="topbar__inner">
+      <div class="topbar__segment topbar__segment--brand">
+        <a class="brand" href="#home" aria-label="ByteCode home">
+          <span class="brand__art" aria-hidden="true">
+            <img class="brand-logo brand-logo--light" src="1.png" alt="">
+            <img class="brand-logo brand-logo--dark" src="2.png" alt="">
+          </span>
+          <span class="brand__line">
+            <span class="brand__word">ByteCode</span>
+          </span>
+        </a>
+      </div>
+
+      <div class="topbar__segment topbar__segment--nav">
+        <nav class="main-nav" aria-label="Primary navigation">
+          <a class="main-nav__link" href="#home"><span>Home</span></a>
+          <div class="nav-dropdown" data-about-dropdown>
+            <button
+              class="main-nav__link main-nav__link--button"
+              id="about-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="about-menu"
+            >
+              <span>About</span>
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6.5L8 10L12 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="nav-dropdown__menu" id="about-menu" role="menu" aria-labelledby="about-trigger">
+              <a class="nav-dropdown__item" href="#about-story" role="menuitem">Story</a>
+              <a class="nav-dropdown__item" href="#about-stack" role="menuitem">Stack</a>
+              <a class="nav-dropdown__item" href="#about-culture" role="menuitem">Culture</a>
+            </div>
+          </div>
+          <a class="main-nav__link" href="#projects"><span>Projects</span></a>
+          <a class="main-nav__link" href="#services"><span>Services</span></a>
+        </nav>
+      </div>
+
+      <div class="topbar__segment topbar__segment--actions">
+        <button class="join-button" id="join-button" type="button">Join</button>
+
+        <div class="member-controls">
+          <div class="theme-pill" role="group" aria-label="Theme toggle">
+            <span class="theme-pill__thumb" aria-hidden="true"></span>
+            <button class="theme-pill__button" type="button" data-theme-value="light" aria-label="Switch to light mode" aria-pressed="true">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="3.4" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M10 1.8V4.1M10 15.9V18.2M18.2 10H15.9M4.1 10H1.8M15.8 4.2L14.2 5.8M5.8 14.2L4.2 15.8M15.8 15.8L14.2 14.2M5.8 5.8L4.2 4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <button class="theme-pill__button" type="button" data-theme-value="dark" aria-label="Switch to dark mode" aria-pressed="false">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M15.6 12.8C14.8 13.2 13.9 13.5 12.9 13.5C9.6 13.5 6.9 10.8 6.9 7.5C6.9 6.3 7.3 5.1 8 4.2C4.9 5 2.7 7.8 2.7 11.1C2.7 15.1 6 18.3 10 18.3C13.4 18.3 16.3 16 17.1 12.8C16.6 12.9 16.1 12.9 15.6 12.8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="user-center" data-user-center>
+            <button
+              class="user-center__trigger"
+              id="user-center-trigger"
+              type="button"
+              aria-label="Open action center"
+              aria-expanded="false"
+              aria-controls="user-center-menu"
+            >
+              <span class="user-center__avatar" aria-hidden="true">
+                <img class="user-center__avatar-image user-center__avatar-image--light" src="1.png" alt="">
+                <img class="user-center__avatar-image user-center__avatar-image--dark" src="2.png" alt="">
+              </span>
+            </button>
+            <div class="user-center__menu" id="user-center-menu" role="menu" aria-labelledby="user-center-trigger">
+              <a class="user-center__item" href="#projects" role="menuitem">Dashboard</a>
+              <a class="user-center__item" href="#services" role="menuitem">Saved builds</a>
+              <button class="user-center__item user-center__item--button" id="sign-out-button" type="button" role="menuitem">
+                Sign out
+              </button>
+            </div>
+          </div>
+
+          <button class="icon-button icon-button--bell" id="uploads-button" type="button" aria-label="New uploads">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9.5 20C10 21.2 11 22 12 22C13 22 14 21.2 14.5 20M6.7 9.7C6.7 6.5 9.1 4 12 4C14.9 4 17.3 6.5 17.3 9.7V12.1C17.3 13.2 17.7 14.2 18.5 15L19.7 16.2C20.2 16.7 19.9 17.6 19.1 17.6H4.9C4.1 17.6 3.8 16.7 4.3 16.2L5.5 15C6.3 14.2 6.7 13.2 6.7 12.1V9.7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="icon-button__badge">3</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell" id="page-shell">
+    <section class="hero" id="home">
+      <div class="hero__copy">
+        <p class="eyebrow">Header System</p>
+        <h1>The first real ByteCode layer now arrives after boot.</h1>
+        <p class="hero__text">
+          The floating bar is split into three segments: the collapsing brand mark,
+          a motion-rich navigation core, and a member-ready action area that changes
+          between guest and registered states.
+        </p>
+      </div>
+
+      <div class="hero__panel">
+        <article class="feature-card">
+          <p class="feature-card__label">Segment One</p>
+          <h2>Brand that compresses into code</h2>
+          <p>It starts as logo plus ByteCode text, then the name slides away into the code pill until the logo is hovered.</p>
+        </article>
+        <article class="feature-card">
+          <p class="feature-card__label">Segment Two</p>
+          <h2>Animated navigation core</h2>
+          <p>Home, About, Projects, and Services enter after boot and respond with lift, glow, and line motion on hover.</p>
+        </article>
+        <article class="feature-card">
+          <p class="feature-card__label">Segment Three</p>
+          <h2>Guest and member states</h2>
+          <p>Guests see Join. Members get the vertical theme pill, an action center, and the new-upload bell.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section--about" id="about">
+      <div class="section__header">
+        <p class="eyebrow">About</p>
+        <h2>Three dropdown destinations are already staged.</h2>
+      </div>
+      <div class="section__grid">
+        <article class="content-card" id="about-story">
+          <h3>Story</h3>
+          <p>ByteCode starts with an operating-system-inspired opening, then settles into a crafted interface instead of a generic web header.</p>
+        </article>
+        <article class="content-card" id="about-stack">
+          <h3>Stack</h3>
+          <p>The header logic is front-end only for now, with theme and member state persisted in local storage so we can plug in real auth later.</p>
+        </article>
+        <article class="content-card" id="about-culture">
+          <h3>Culture</h3>
+          <p>The design language leans precise, cinematic, and intentional, with compact motion that feels like software, not a template.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section__header">
+        <p class="eyebrow">Projects</p>
+        <h2>Room for featured builds and launch surfaces.</h2>
+      </div>
+      <div class="section__grid section__grid--wide">
+        <article class="content-card">
+          <h3>Interface Concepts</h3>
+          <p>Use this area for featured product builds, experiments, and highlighted work once we move past the shell and into the full website.</p>
+        </article>
+        <article class="content-card">
+          <h3>Release Queue</h3>
+          <p>The bell in the top bar is already framed as a new-upload indicator, so this section can later connect to real release and update data.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="section__header">
+        <p class="eyebrow">Services</p>
+        <h2>A clean foundation for the next build pass.</h2>
+      </div>
+      <div class="section__grid section__grid--wide">
+        <article class="content-card">
+          <h3>Design Systems</h3>
+          <p>We can extend the same header logic into dashboards, profile spaces, and project pages so the entire site feels like one software environment.</p>
+        </article>
+        <article class="content-card">
+          <h3>Product Workflows</h3>
+          <p>The member controls are ready to connect to auth, notifications, and settings once we move from prototype state into live behavior.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
