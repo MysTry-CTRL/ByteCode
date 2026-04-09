@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access | ByteCode</title>
+  <link rel="icon" type="image/png" href="1.png?v=20260408" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" href="2.png?v=20260408" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" href="1.png?v=20260408">
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body class="auth-page" data-auth-mode="login" data-theme="light">
+  <main class="auth-shell">
+    <section class="auth-window" aria-label="Authentication window">
+      <section class="auth-pane auth-pane--form">
+        <a class="auth-brand" href="index.html" aria-label="Back to ByteCode home">
+          <span class="auth-brand__tile" aria-hidden="true">
+            <img class="auth-brand__logo auth-brand__logo--light" src="1.png?v=20260408" alt="">
+            <img class="auth-brand__logo auth-brand__logo--dark" src="2.png?v=20260408" alt="">
+          </span>
+          <span class="auth-brand__text">ByteCode</span>
+        </a>
+
+        <div class="auth-copy">
+          <section class="auth-copy__panel auth-copy__panel--login" data-auth-panel="login">
+            <p class="auth-eyebrow">Secure Access</p>
+            <h1>Welcome back</h1>
+            <p class="auth-copy__text">
+              Sign in to enter your workspace, manage uploads, and unlock the full ByteCode interface.
+            </p>
+          </section>
+
+          <section class="auth-copy__panel auth-copy__panel--register" data-auth-panel="register" aria-hidden="true">
+            <p class="auth-eyebrow">New Account</p>
+            <h1>Create your account</h1>
+            <p class="auth-copy__text">
+              Set up your ByteCode profile to access projects, saved builds, uploads, and workspace controls.
+            </p>
+          </section>
+        </div>
+
+        <div class="auth-forms">
+          <form class="auth-form auth-form--login" id="login-form" data-auth-form="login">
+            <label class="auth-field">
+              <span>Email Address</span>
+              <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            </label>
+
+            <label class="auth-field">
+              <span>Password</span>
+              <input type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+            </label>
+
+            <div class="auth-form__row">
+              <label class="auth-check">
+                <input type="checkbox" name="remember">
+                <span>Remember me</span>
+              </label>
+              <button class="auth-link auth-link--button" type="button" data-auth-switch="register">Need help?</button>
+            </div>
+
+            <button class="auth-submit" type="submit">Log in</button>
+            <p class="auth-note">Demo flow: signing in stores a local session in this browser.</p>
+            <p class="auth-switch-note">
+              Don't have an account?
+              <button class="auth-switch-action" type="button" data-auth-switch="register">Register here</button>
+            </p>
+          </form>
+
+          <form class="auth-form auth-form--register" id="register-form" data-auth-form="register" aria-hidden="true">
+            <label class="auth-field">
+              <span>Full Name</span>
+              <input type="text" name="name" placeholder="Your name" autocomplete="name" required>
+            </label>
+
+            <label class="auth-field">
+              <span>Email Address</span>
+              <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            </label>
+
+            <label class="auth-field">
+              <span>Password</span>
+              <input type="password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+            </label>
+
+            <button class="auth-submit" type="submit">Create account</button>
+            <p class="auth-note">Demo flow: creating an account stores a local session in this browser.</p>
+            <p class="auth-switch-note">
+              Already registered?
+              <button class="auth-switch-action" type="button" data-auth-switch="login">Log In</button>
+            </p>
+          </form>
+        </div>
+      </section>
+
+      <aside class="auth-pane auth-pane--art">
+        <div class="auth-art">
+          <div class="auth-art__orb auth-art__orb--one" aria-hidden="true"></div>
+          <div class="auth-art__orb auth-art__orb--two" aria-hidden="true"></div>
+          <div class="auth-art__grid" aria-hidden="true"></div>
+          <div class="auth-art__beam" aria-hidden="true"></div>
+          <div class="auth-art__logo" aria-hidden="true">
+            <img class="auth-art__logo-image auth-art__logo-image--light" src="1.png?v=20260408" alt="">
+            <img class="auth-art__logo-image auth-art__logo-image--dark" src="2.png?v=20260408" alt="">
+          </div>
+
+          <div class="auth-art__copy-stack">
+            <section class="auth-art__copy auth-art__copy--login" data-auth-art="login">
+              <h2>Log in</h2>
+              <p>
+                Don't have an account?
+                <button class="auth-switch-action auth-switch-action--light" type="button" data-auth-switch="register">Register here</button>
+              </p>
+            </section>
+
+            <section class="auth-art__copy auth-art__copy--register" data-auth-art="register" aria-hidden="true">
+              <h2>Register</h2>
+              <p>
+                Already registered?
+                <button class="auth-switch-action auth-switch-action--light" type="button" data-auth-switch="login">Log In</button>
+              </p>
+            </section>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="auth.js"></script>
+</body>
+</html>

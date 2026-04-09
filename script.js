@@ -206,7 +206,7 @@ function setupMenus() {
 
 function setupControls() {
   joinButton.addEventListener("click", () => {
-    setUserState("member");
+    window.location.href = "login.html?mode=login";
   });
 
   signOutButton.addEventListener("click", () => {
