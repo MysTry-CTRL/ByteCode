@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#050914" id="theme-color-meta">
   <title>Access | ByteCode</title>
   <link rel="icon" type="image/png" href="1.png?v=20260408" media="(prefers-color-scheme: light)">
   <link rel="icon" type="image/png" href="2.png?v=20260408" media="(prefers-color-scheme: dark)">
   <link rel="icon" type="image/png" href="1.png?v=20260408">
   <link rel="stylesheet" href="auth.css">
 </head>
-<body class="auth-page" data-auth-mode="login" data-theme="light">
+<body class="auth-page" data-auth-mode="login" data-theme="dark">
   <main class="auth-shell">
     <section class="auth-window" aria-label="Authentication window">
       <section class="auth-pane auth-pane--form">
@@ -48,7 +50,12 @@
 
             <label class="auth-field">
               <span>Password</span>
-              <input type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+              <span class="auth-password">
+                <input type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+                <button class="auth-password__toggle" type="button" data-password-toggle aria-label="Show password" aria-pressed="false">
+                  <span data-password-toggle-label>Show</span>
+                </button>
+              </span>
             </label>
 
             <div class="auth-form__row">
@@ -60,7 +67,41 @@
             </div>
 
             <button class="auth-submit" type="submit">Log in</button>
-            <p class="auth-note">Demo flow: signing in stores a local session in this browser.</p>
+            <div class="auth-alt">
+              <div class="auth-alt__divider"><span>or continue with</span></div>
+              <div class="auth-alt__grid">
+                <button class="auth-provider auth-provider--google" type="button" data-auth-provider="google">
+                  <span class="auth-provider__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M22 12.24C22 11.46 21.93 10.72 21.8 10H12V14.02H17.6C17.36 15.32 16.62 16.42 15.5 17.16V19.77H18.86C20.82 17.97 22 15.32 22 12.24Z" fill="#4285F4"/>
+                      <path d="M12 22C14.81 22 17.17 21.07 18.86 19.77L15.5 17.16C14.57 17.78 13.38 18.15 12 18.15C9.29 18.15 6.99 16.32 6.17 13.86H2.7V16.55C4.38 19.89 7.84 22 12 22Z" fill="#34A853"/>
+                      <path d="M6.17 13.86C5.96 13.24 5.84 12.58 5.84 11.9C5.84 11.22 5.96 10.56 6.17 9.94V7.25H2.7C2.02 8.61 1.63 10.19 1.63 11.9C1.63 13.61 2.02 15.19 2.7 16.55L6.17 13.86Z" fill="#FBBC05"/>
+                      <path d="M12 5.65C13.5 5.65 14.84 6.17 15.89 7.18L18.94 4.13C17.17 2.48 14.81 1.47 12 1.47C7.84 1.47 4.38 3.58 2.7 6.92L6.17 9.61C6.99 7.15 9.29 5.65 12 5.65Z" fill="#EA4335"/>
+                    </svg>
+                  </span>
+                  <span>Google</span>
+                </button>
+                <button class="auth-provider auth-provider--github" type="button" data-auth-provider="github">
+                  <span class="auth-provider__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.58 2 12.23C2 16.75 4.87 20.57 8.84 21.93C9.34 22.03 9.52 21.71 9.52 21.44C9.52 21.19 9.51 20.37 9.5 19.28C6.73 19.9 6.14 18.09 6.14 18.09C5.68 16.88 5.03 16.56 5.03 16.56C4.12 15.92 5.1 15.93 5.1 15.93C6.1 16 6.63 16.99 6.63 16.99C7.52 18.56 8.97 18.1 9.54 17.83C9.63 17.17 9.89 16.72 10.18 16.46C7.97 16.2 5.65 15.32 5.65 11.4C5.65 10.28 6.04 9.37 6.68 8.65C6.58 8.39 6.23 7.33 6.78 5.89C6.78 5.89 7.62 5.61 9.5 6.93C10.3 6.7 11.15 6.59 12 6.59C12.85 6.59 13.7 6.7 14.5 6.93C16.38 5.61 17.22 5.89 17.22 5.89C17.77 7.33 17.42 8.39 17.32 8.65C17.96 9.37 18.35 10.28 18.35 11.4C18.35 15.33 16.02 16.19 13.81 16.45C14.17 16.78 14.49 17.42 14.49 18.41C14.49 19.83 14.48 20.98 14.48 21.44C14.48 21.71 14.66 22.04 15.17 21.93C19.13 20.56 22 16.75 22 12.23C22 6.58 17.52 2 12 2Z"/>
+                    </svg>
+                  </span>
+                  <span>GitHub</span>
+                </button>
+                <button class="auth-provider auth-provider--phone" type="button" data-auth-provider="phone">
+                  <span class="auth-provider__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <rect x="7.2" y="2.6" width="9.6" height="18.8" rx="2.6" stroke="currentColor" stroke-width="1.8"/>
+                      <path d="M10 5.6H14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                      <circle cx="12" cy="17.9" r="1.1" fill="currentColor"/>
+                    </svg>
+                  </span>
+                  <span>Phone</span>
+                </button>
+              </div>
+            </div>
+            <p class="auth-feedback" id="auth-feedback-login" role="status" aria-live="polite"></p>
             <p class="auth-switch-note">
               Don't have an account?
               <button class="auth-switch-action" type="button" data-auth-switch="register">Register here</button>
@@ -80,11 +121,50 @@
 
             <label class="auth-field">
               <span>Password</span>
-              <input type="password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+              <span class="auth-password">
+                <input type="password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+                <button class="auth-password__toggle" type="button" data-password-toggle aria-label="Show password" aria-pressed="false">
+                  <span data-password-toggle-label>Show</span>
+                </button>
+              </span>
             </label>
 
             <button class="auth-submit" type="submit">Create account</button>
-            <p class="auth-note">Demo flow: creating an account stores a local session in this browser.</p>
+            <div class="auth-alt">
+              <div class="auth-alt__divider"><span>or continue with</span></div>
+              <div class="auth-alt__grid">
+                <button class="auth-provider auth-provider--google" type="button" data-auth-provider="google">
+                  <span class="auth-provider__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M22 12.24C22 11.46 21.93 10.72 21.8 10H12V14.02H17.6C17.36 15.32 16.62 16.42 15.5 17.16V19.77H18.86C20.82 17.97 22 15.32 22 12.24Z" fill="#4285F4"/>
+                      <path d="M12 22C14.81 22 17.17 21.07 18.86 19.77L15.5 17.16C14.57 17.78 13.38 18.15 12 18.15C9.29 18.15 6.99 16.32 6.17 13.86H2.7V16.55C4.38 19.89 7.84 22 12 22Z" fill="#34A853"/>
+                      <path d="M6.17 13.86C5.96 13.24 5.84 12.58 5.84 11.9C5.84 11.22 5.96 10.56 6.17 9.94V7.25H2.7C2.02 8.61 1.63 10.19 1.63 11.9C1.63 13.61 2.02 15.19 2.7 16.55L6.17 13.86Z" fill="#FBBC05"/>
+                      <path d="M12 5.65C13.5 5.65 14.84 6.17 15.89 7.18L18.94 4.13C17.17 2.48 14.81 1.47 12 1.47C7.84 1.47 4.38 3.58 2.7 6.92L6.17 9.61C6.99 7.15 9.29 5.65 12 5.65Z" fill="#EA4335"/>
+                    </svg>
+                  </span>
+                  <span>Google</span>
+                </button>
+                <button class="auth-provider auth-provider--github" type="button" data-auth-provider="github">
+                  <span class="auth-provider__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.58 2 12.23C2 16.75 4.87 20.57 8.84 21.93C9.34 22.03 9.52 21.71 9.52 21.44C9.52 21.19 9.51 20.37 9.5 19.28C6.73 19.9 6.14 18.09 6.14 18.09C5.68 16.88 5.03 16.56 5.03 16.56C4.12 15.92 5.1 15.93 5.1 15.93C6.1 16 6.63 16.99 6.63 16.99C7.52 18.56 8.97 18.1 9.54 17.83C9.63 17.17 9.89 16.72 10.18 16.46C7.97 16.2 5.65 15.32 5.65 11.4C5.65 10.28 6.04 9.37 6.68 8.65C6.58 8.39 6.23 7.33 6.78 5.89C6.78 5.89 7.62 5.61 9.5 6.93C10.3 6.7 11.15 6.59 12 6.59C12.85 6.59 13.7 6.7 14.5 6.93C16.38 5.61 17.22 5.89 17.22 5.89C17.77 7.33 17.42 8.39 17.32 8.65C17.96 9.37 18.35 10.28 18.35 11.4C18.35 15.33 16.02 16.19 13.81 16.45C14.17 16.78 14.49 17.42 14.49 18.41C14.49 19.83 14.48 20.98 14.48 21.44C14.48 21.71 14.66 22.04 15.17 21.93C19.13 20.56 22 16.75 22 12.23C22 6.58 17.52 2 12 2Z"/>
+                    </svg>
+                  </span>
+                  <span>GitHub</span>
+                </button>
+                <button class="auth-provider auth-provider--phone" type="button" data-auth-provider="phone">
+                  <span class="auth-provider__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <rect x="7.2" y="2.6" width="9.6" height="18.8" rx="2.6" stroke="currentColor" stroke-width="1.8"/>
+                      <path d="M10 5.6H14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                      <circle cx="12" cy="17.9" r="1.1" fill="currentColor"/>
+                    </svg>
+                  </span>
+                  <span>Phone</span>
+                </button>
+              </div>
+            </div>
+            <p class="auth-feedback" id="auth-feedback-register" role="status" aria-live="polite"></p>
             <p class="auth-switch-note">
               Already registered?
               <button class="auth-switch-action" type="button" data-auth-switch="login">Log In</button>
@@ -126,6 +206,7 @@
     </section>
   </main>
 
-  <script src="auth.js"></script>
+  <div id="phone-recaptcha" aria-hidden="true"></div>
+  <script type="module" src="auth.js"></script>
 </body>
 </html>

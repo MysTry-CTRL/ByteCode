@@ -1,8 +1,10 @@
+import { auth, isDefaultAdminEmail } from "./firebase.js";
+import {
+  onAuthStateChanged,
+  signOut
+} from "./node_modules/firebase/firebase-auth.js";
+
 const body = document.body;
-const bootStatus = document.getElementById("boot-status");
-const bootLog = document.getElementById("boot-log");
-const bootProgressFill = document.getElementById("boot-progress-fill");
-const bootScreen = document.getElementById("boot-screen");
 const aboutDropdown = document.querySelector("[data-about-dropdown]");
 const aboutTrigger = document.getElementById("about-trigger");
 const aboutMenu = document.getElementById("about-menu");
@@ -12,44 +14,13 @@ const userCenterMenu = document.getElementById("user-center-menu");
 const joinButton = document.getElementById("join-button");
 const signOutButton = document.getElementById("sign-out-button");
 const themeButtons = document.querySelectorAll("[data-theme-value]");
+const themeColorMeta = document.getElementById("theme-color-meta");
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 const themeStorageKey = "bytecode-theme";
+const userRoleStorageKey = "bytecode-user-role";
 const userStateStorageKey = "bytecode-user-state";
-
-const bootSteps = [
-  {
-    status: "Powering on interface core...",
-    log: "Kernel handoff complete",
-    progress: 16,
-    delay: prefersReducedMotion ? 120 : 480
-  },
-  {
-    status: "Preparing floating top bar...",
-    log: "Segment layout mounted",
-    progress: 34,
-    delay: prefersReducedMotion ? 120 : 560
-  },
-  {
-    status: "Loading navigation systems...",
-    log: "Primary routes connected",
-    progress: 56,
-    delay: prefersReducedMotion ? 120 : 620
-  },
-  {
-    status: "Syncing member controls...",
-    log: "Theme and action center online",
-    progress: 78,
-    delay: prefersReducedMotion ? 120 : 680
-  },
-  {
-    status: "Launching ByteCode header...",
-    log: "Interface ready",
-    progress: 100,
-    delay: prefersReducedMotion ? 140 : 760
-  }
-];
 
 function readStoredValue(key) {
   try {
@@ -67,16 +38,19 @@ function storeValue(key, value) {
   }
 }
 
-function appendLogLine(message) {
-  const item = document.createElement("li");
-  item.textContent = `[ OK ] ${message}`;
-  bootLog.appendChild(item);
+function syncBrowserTheme(theme) {
+  document.documentElement.style.colorScheme = theme;
+
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute("content", theme === "light" ? "#f5f8ff" : "#050914");
+  }
 }
 
 function setTheme(theme) {
   const nextTheme = theme === "dark" ? "dark" : "light";
   body.dataset.theme = nextTheme;
   storeValue(themeStorageKey, nextTheme);
+  syncBrowserTheme(nextTheme);
 
   themeButtons.forEach((button) => {
     const isActive = button.dataset.themeValue === nextTheme;
@@ -92,6 +66,12 @@ function setUserState(state) {
   if (nextState === "guest") {
     closeUserCenter();
   }
+}
+
+function setUserRole(role) {
+  const nextRole = role === "admin" ? "admin" : role === "member" ? "member" : "guest";
+  body.dataset.userRole = nextRole;
+  storeValue(userRoleStorageKey, nextRole);
 }
 
 function openAboutMenu() {
@@ -121,42 +101,17 @@ function closeAllMenus() {
 
 function initializeStoredState() {
   const storedTheme = readStoredValue(themeStorageKey);
-  const storedUserState = readStoredValue(userStateStorageKey);
-
-  setTheme(storedTheme || "light");
-  setUserState(storedUserState || "guest");
+  setTheme(storedTheme || "dark");
+  setUserState("guest");
+  setUserRole("guest");
 }
 
-function completeBoot() {
-  body.classList.add("boot-complete");
-
-  window.setTimeout(() => {
-    body.classList.add("topbar-live");
-  }, prefersReducedMotion ? 0 : 180);
+function scheduleBrandCondense() {
+  body.classList.remove("brand-condensed");
 
   window.setTimeout(() => {
     body.classList.add("brand-condensed");
-  }, prefersReducedMotion ? 0 : 2800);
-
-  window.setTimeout(() => {
-    bootScreen.setAttribute("aria-hidden", "true");
-  }, prefersReducedMotion ? 40 : 900);
-}
-
-function runBootSequence(index = 0) {
-  if (index >= bootSteps.length) {
-    completeBoot();
-    return;
-  }
-
-  const step = bootSteps[index];
-  bootStatus.textContent = step.status;
-  bootProgressFill.style.width = `${step.progress}%`;
-  appendLogLine(step.log);
-
-  window.setTimeout(() => {
-    runBootSequence(index + 1);
-  }, step.delay);
+  }, prefersReducedMotion ? 0 : 1900);
 }
 
 function setupMenus() {
@@ -209,8 +164,14 @@ function setupControls() {
     window.location.href = "login.html?mode=login";
   });
 
-  signOutButton.addEventListener("click", () => {
-    setUserState("guest");
+  signOutButton.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      setUserState("guest");
+      setUserRole("guest");
+    } catch (error) {
+      console.error("Unable to sign out:", error);
+    }
   });
 
   themeButtons.forEach((button) => {
@@ -220,13 +181,23 @@ function setupControls() {
   });
 }
 
+function setupAuthState() {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      setUserState("guest");
+      setUserRole("guest");
+      return;
+    }
+
+    setUserState("member");
+    setUserRole(isDefaultAdminEmail(user.email) ? "admin" : "member");
+  });
+}
+
 window.addEventListener("load", () => {
   initializeStoredState();
   setupMenus();
   setupControls();
-
-  bootProgressFill.style.width = "6%";
-  window.setTimeout(() => {
-    runBootSequence();
-  }, prefersReducedMotion ? 20 : 280);
+  setupAuthState();
+  scheduleBrandCondense();
 });

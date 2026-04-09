@@ -3,55 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#050914" id="theme-color-meta">
   <title>ByteCode</title>
   <link rel="icon" type="image/png" href="1.png?v=20260408" media="(prefers-color-scheme: light)">
   <link rel="icon" type="image/png" href="2.png?v=20260408" media="(prefers-color-scheme: dark)">
   <link rel="icon" type="image/png" href="1.png?v=20260408">
   <link rel="stylesheet" href="style.css">
-  <noscript>
-    <style>
-      .boot-screen { display: none; }
-      .topbar {
-        opacity: 1 !important;
-        transform: translate(-50%, 0) !important;
-        pointer-events: auto !important;
-      }
-      .page-shell {
-        opacity: 1 !important;
-        transform: none !important;
-      }
-    </style>
-  </noscript>
 </head>
-<body data-theme="light" data-user-state="guest">
-  <div class="boot-screen" id="boot-screen" role="dialog" aria-modal="true" aria-label="ByteCode startup screen">
-    <div class="boot-screen__noise"></div>
-    <div class="boot-screen__center">
-      <div class="boot-logo" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <p class="boot-label">ByteCode Startup</p>
-      <p class="boot-status" id="boot-status">Powering on interface core...</p>
-      <div class="boot-loader" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <div class="boot-progress">
-        <span class="boot-progress__fill" id="boot-progress-fill"></span>
-      </div>
-      <ul class="boot-log" id="boot-log" aria-live="polite"></ul>
-    </div>
-  </div>
-
+<body data-theme="dark" data-user-state="guest">
   <header class="topbar" id="topbar">
     <div class="topbar__inner">
       <div class="topbar__segment topbar__segment--brand">
@@ -94,7 +54,7 @@
       </div>
 
       <div class="topbar__segment topbar__segment--actions">
-        <button class="join-button" id="join-button" type="button">Join</button>
+        <button class="join-button" id="join-button" type="button" href="login.html">Join</button>
 
         <div class="member-controls">
           <div class="theme-pill" role="group" aria-label="Theme toggle">
@@ -233,6 +193,6 @@
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
